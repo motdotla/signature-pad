@@ -4,6 +4,7 @@ module.exports = (grunt) ->
     banner: "/*! <%= pkg.name %>.js - <%= pkg.version %> - <%= grunt.template.today(\"yyyy-mm-dd\") %> - <%= pkg.author %> */\n"
     files: [
       "src/zepto.js",
+      "src/marrow.js",
       "src/signature-mark.js",
       "src/signature-pad.js",
       "src/signature-pad/*.js"

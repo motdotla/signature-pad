@@ -16,6 +16,20 @@
     return this;
   };
 
+  SignaturePad = Marrow(SignaturePad, function(self){
+    self.on("doingStuff", function(stuff){
+      console.log( stuff + " is being done"); //Cool Stuff is being done
+    });
+
+    self.to("doingStuff", function(stuff){
+      console.log("to doingStuff");
+    });
+    
+    self.doingStuff("Cool Stuff");
+
+    self.emit("doingStuff");
+  });
+
   SignaturePad.prototype.init = function() {
     if (this.script) {
       this.script.className += " signature-pad-script";
