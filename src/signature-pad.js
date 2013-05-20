@@ -24,6 +24,8 @@
       this.draw();
       this.events();
       SignatureMark(this.canvas);
+    } else {
+      console.error("Could not find script tag to initialize on.");
     }
   };
 
