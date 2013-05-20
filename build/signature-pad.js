@@ -173,25 +173,11 @@
     if (this.script) {
       this.key     = this.script.getAttribute("data-signature-key");
     }
-    
-    this.to("doStuff", function(){
-      // computation
-      console.log("computation");
-    });
-
-    this.on("doStuff", function(){
-      console.log("doing Stuff");
-    });
-
-
-    this.doStuff();
 
     this.init();
 
     return this;
   };
-
-  SignaturePad = Marrow(SignaturePad);
 
   SignaturePad.prototype.init = function() {
     if (this.script) {
@@ -421,14 +407,8 @@
 
   SignaturePad.prototype.saveSignature = function(e) {
     var data_url = self.canvas.toDataURL("png");
+    Zepto(document.body).trigger("signature_pad:data_url", data_url);
 
-    // var customEventFunction = function() {
-    //   alert('triggered custom event');
-    // };
-    // self.AddEvent(self.script, 'signature.data_url', customEventFunction);
-    // self.TriggerEvent(self.script, 'signature.data_url');
-    // // self.Trigger(self.script, 'signature.data_url', data_url);
-    
     self.hide(e);
     self.pad_img.src = data_url;
 
@@ -439,11 +419,8 @@
     var payload = {data_url: data_url, key: self.key};
     self.Post(self.endpoint+'/api/v0/signatures.json', payload, function(resp){
       if (!!resp.success) {
-
         self.hidden_field.value = resp.signature.url;
-
-        // trigger this event here using MARROW!
-        // SignatureHelpers.trigger($(self.script), 'signature.save', resp.signature);
+        Zepto(document.body).trigger("signature_pad:save", resp.signature);
       } else {
         console.error(resp.error.message);
       }
@@ -515,33 +492,6 @@
 }(SignaturePad));
 
 (function(SignaturePad){  
-  var htmlEvents = {
-    //<body> and <frameset> Events
-    onload:1,
-    onunload:1,
-    //Form Events
-    onblur:1,
-    onchange:1,
-    onfocus:1,
-    onreset:1,
-    onselect:1,
-    onsubmit:1,
-    //Image Events
-    onabort:1,
-    //Keyboard Events
-    onkeydown:1,
-    onkeypress:1,
-    onkeyup:1,
-    //Mouse Events
-    onclick:1,
-    ondblclick:1,
-    onmousedown:1,
-    onmousemove:1,
-    onmouseout:1,
-    onmouseover:1,
-    onmouseup:1
-  };
-
   SignaturePad.prototype.Uuid = function() {
     return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(c) {
       var r, v;
@@ -619,58 +569,6 @@
       }
     });
   };
-
-  SignaturePad.prototype.Trigger = function(element, name, data) {
-    if (data === null) {
-      data = {};
-    }
-
-    if (window.Zepto) {
-      return Zepto(element).trigger(name, data);
-    }
-  };
-
-  SignaturePad.prototype.TriggerEvent = function(el, eventName) {
-    var event;
-    if(document.createEvent){
-      event = document.createEvent('HTMLEvents');
-      event.initEvent(eventName,true,true);
-    }else if(document.createEventObject){// IE < 9
-      event = document.createEventObject();
-      event.eventType = eventName;
-    }
-    event.eventName = eventName;
-    if(el.dispatchEvent){
-      el.dispatchEvent(event);
-    }else if(el.fireEvent && htmlEvents['on'+eventName]){// IE < 9
-      el.fireEvent('on'+event.eventType,event);// can trigger only real event (e.g. 'click')
-    }else if(el[eventName]){
-      el[eventName]();
-    }else if(el['on'+eventName]){
-      el['on'+eventName]();
-    }   
-  };
-
-  // SignaturePad.prototype.AddEvent = function(el, type, handler) {
-  //   if(el.addEventListener){
-  //     el.addEventListener(type,handler,false);
-  //   }else if(el.attachEvent && htmlEvents['on'+type]){// IE < 9
-  //     el.attachEvent('on'+type,handler);
-  //   }else{
-  //     el['on'+type]=handler;
-  //   }
-  // };
-
-  // SignaturePad.prototype.RemoveEvent = function(el, type, handler) {
-  //   if(el.removeventListener){
-  //     el.removeEventListener(type,handler,false);
-  //   }else if(el.detachEvent && htmlEvents['on'+type]){// IE < 9
-  //     el.detachEvent('on'+type,handler);
-  //   }else{
-  //     el['on'+type]=null;
-  //   }
-  // };
-
 }(SignaturePad));
 
 SignaturePad();

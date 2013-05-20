@@ -10,25 +10,11 @@
     if (this.script) {
       this.key     = this.script.getAttribute("data-signature-key");
     }
-    
-    this.to("doStuff", function(){
-      // computation
-      console.log("computation");
-    });
-
-    this.on("doStuff", function(){
-      console.log("doing Stuff");
-    });
-
-
-    this.doStuff();
 
     this.init();
 
     return this;
   };
-
-  SignaturePad = Marrow(SignaturePad);
 
   SignaturePad.prototype.init = function() {
     if (this.script) {

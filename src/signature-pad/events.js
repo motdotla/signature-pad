@@ -20,14 +20,8 @@
 
   SignaturePad.prototype.saveSignature = function(e) {
     var data_url = self.canvas.toDataURL("png");
+    Zepto(document.body).trigger("signature_pad:data_url", data_url);
 
-    // var customEventFunction = function() {
-    //   alert('triggered custom event');
-    // };
-    // self.AddEvent(self.script, 'signature.data_url', customEventFunction);
-    // self.TriggerEvent(self.script, 'signature.data_url');
-    // // self.Trigger(self.script, 'signature.data_url', data_url);
-    
     self.hide(e);
     self.pad_img.src = data_url;
 
@@ -38,11 +32,8 @@
     var payload = {data_url: data_url, key: self.key};
     self.Post(self.endpoint+'/api/v0/signatures.json', payload, function(resp){
       if (!!resp.success) {
-
         self.hidden_field.value = resp.signature.url;
-
-        // trigger this event here using MARROW!
-        // SignatureHelpers.trigger($(self.script), 'signature.save', resp.signature);
+        Zepto(document.body).trigger("signature_pad:save", resp.signature);
       } else {
         console.error(resp.error.message);
       }

@@ -7,19 +7,13 @@
   <script data-signature-key='pk_35a270ca265ebce26d12d11a18349c' src='/build/signature-pad.js'></script>
 
   <script type="text/javascript">
-    // var el = $("script")[0];
-    // if(el.addEventListener){
-    //   el.addEventListener('signature.data_url', function() {
-    //     alert('custom event triggered');
-    //   });
-    // }
+    Zepto(document).on('signature_pad:data_url', function(e, data_url){
+      console.log(data_url);
+    });
 
-    $(document).ready(start);
-    function start() {
-      $('script').on('signature.data_url', function(){
-        alert("success!");
-      });
-    }
+    Zepto(document).on('signature_pad:save', function(e, signature){
+      console.log(signature.url);
+    });
   </script>
 
   <br/>
