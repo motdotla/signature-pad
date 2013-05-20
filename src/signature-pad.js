@@ -7,28 +7,28 @@
     this.endpoint  = "https://www.signature.io";
     this.uuid      = this.Uuid();
     this.script    = this.CurrentlyExecutedScript();
-
     if (this.script) {
       this.key     = this.script.getAttribute("data-signature-key");
     }
     
+    this.to("doStuff", function(){
+      // computation
+      console.log("computation");
+    });
+
+    this.on("doStuff", function(){
+      console.log("doing Stuff");
+    });
+
+
+    this.doStuff();
+
     this.init();
+
     return this;
   };
 
-  SignaturePad = Marrow(SignaturePad, function(self){
-    self.on("doingStuff", function(stuff){
-      console.log( stuff + " is being done"); //Cool Stuff is being done
-    });
-
-    self.to("doingStuff", function(stuff){
-      console.log("to doingStuff");
-    });
-    
-    self.doingStuff("Cool Stuff");
-
-    self.emit("doingStuff");
-  });
+  SignaturePad = Marrow(SignaturePad);
 
   SignaturePad.prototype.init = function() {
     if (this.script) {

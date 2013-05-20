@@ -9,20 +9,24 @@
   SignaturePad.prototype.events = function() {
     self = this;
 
-    $(this.pad).on(CLICK, this.show);
-    $(this.add_signature).on(CLICK, this.saveSignature);
-    $(this.close_signature).on(CLICK, this.hide);
-    $(this.clear_signature).on(CLICK, this.clear);
-    $(this.wrapper).on(CLICK, function(e) { e.stopPropagation(); });
-    $(this.rotator_close).on(CLICK, this.hideRotatorAndPad);
-    $(window).resize(this.showOrHideRotator);
+    Zepto(this.pad).on(CLICK, this.show);
+    Zepto(this.add_signature).on(CLICK, this.saveSignature);
+    Zepto(this.close_signature).on(CLICK, this.hide);
+    Zepto(this.clear_signature).on(CLICK, this.clear);
+    Zepto(this.wrapper).on(CLICK, function(e) { e.stopPropagation(); });
+    Zepto(this.rotator_close).on(CLICK, this.hideRotatorAndPad);
+    Zepto(window).resize(this.showOrHideRotator);
   };
 
   SignaturePad.prototype.saveSignature = function(e) {
     var data_url = self.canvas.toDataURL("png");
-    
-    // trigger this event here using MARROW!
-    // SignatureHelpers.trigger($(self.script), 'signature.data_url', data_url);
+
+    // var customEventFunction = function() {
+    //   alert('triggered custom event');
+    // };
+    // self.AddEvent(self.script, 'signature.data_url', customEventFunction);
+    // self.TriggerEvent(self.script, 'signature.data_url');
+    // // self.Trigger(self.script, 'signature.data_url', data_url);
     
     self.hide(e);
     self.pad_img.src = data_url;
