@@ -24,20 +24,6 @@
 
     self.hide(e);
     self.pad_img.src = data_url;
-
-    self.postSignature(data_url);
-  };
-
-  SignaturePad.prototype.postSignature = function(data_url) {
-    var payload = {data_url: data_url, key: self.key};
-    self.Post(self.endpoint+'/api/v0/signatures.json', payload, function(resp){
-      if (!!resp.success) {
-        self.hidden_field.value = resp.signature.url;
-        Zepto(self.script).trigger("signature_pad:save", resp.signature);
-      } else {
-        console.error(resp.error.message);
-      }
-    });
   };
 
   SignaturePad.prototype.show = function(e){

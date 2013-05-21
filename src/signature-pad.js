@@ -13,7 +13,7 @@
       var data_signature_endpoint = this.script.getAttribute("data-signature-endpoint");
       if (data_signature_endpoint) {
         this.endpoint = data_signature_endpoint;
-      }  
+      }
     }
 
     this.init();
