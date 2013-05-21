@@ -31,14 +31,6 @@
     this.pad.className                = "signature-pad";
     this.pad.id                       = "signature-pad-"+this.uuid;
 
-    this.hidden_field                 = document.createElement('input');
-    this.hidden_field.className       = "signature-hidden-field";
-    this.hidden_field.id              = "signature-hidden-field-"+this.uuid;
-    this.hidden_field.type            = "hidden";
-    this.hidden_field.name            = "signature_url";
-    this.hidden_field.value           = "";
-    this.pad.appendChild(this.hidden_field);
-
     this.pad_img                      = document.createElement('img');
     this.pad_img.className            = "signature-pad-img";
     this.pad_img.id                   = "signature-pad-img-"+this.uuid;
