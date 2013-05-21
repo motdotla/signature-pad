@@ -4,15 +4,15 @@
   
 </head>
 <body>
-  <script data-signature-key='pk_35a270ca265ebce26d12d11a18349c' src='/build/signature-pad.js'></script>
+  <script data-signature-key='pk_35a270ca265ebce26d12d11a18349c' src='/build/signature-pad.js' class="first"></script>
 
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js"></script>
   <script type="text/javascript">
-    Zepto('script').on('signature_pad:data_url', function(e, data_url){
+    Zepto('script.first').on('signature_pad:data_url', function(e, data_url){
       console.log(data_url);
     });
 
-    Zepto('script').on('signature_pad:save', function(e, signature){
+    Zepto('script.first').on('signature_pad:save', function(e, signature){
       console.log(signature.url);
     });
   </script>
@@ -21,5 +21,18 @@
   <br/>
   <br/>
   <br/>
+
+  <script data-signature-key='pk_35a270ca265ebce26d12d11a18349c' data-signature-endpoint="https://signature-staging.herokuapp.com" src='/build/signature-pad.js' class="second"></script>
+
+  <script type="text/javascript">
+    Zepto('script.second').on('signature_pad:data_url', function(e, data_url){
+      console.log(data_url);
+    });
+
+    Zepto('script.second').on('signature_pad:save', function(e, signature){
+      console.log(signature.url);
+    });
+  </script>
+
 </body>
 </html>

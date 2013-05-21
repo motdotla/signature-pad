@@ -169,7 +169,12 @@
     this.uuid      = this.Uuid();
     this.script    = this.CurrentlyExecutedScript();
     if (this.script) {
-      this.key     = this.script.getAttribute("data-signature-key");
+      this.key      = this.script.getAttribute("data-signature-key");
+
+      var data_signature_endpoint = this.script.getAttribute("data-signature-endpoint");
+      if (data_signature_endpoint) {
+        this.endpoint = data_signature_endpoint;
+      }  
     }
 
     this.init();
