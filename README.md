@@ -19,15 +19,4 @@ Optionally, bind to the signature_pad:data_url event to get a png data_url of th
       Zepto('script').on('signature_pad:data_url', function(e, data_url){
         console.log(data_url);
       });
-    </script> 
-
-## Demo
-
-<script src='https://raw.github.com/scottmotte/signature-pad/master/build/signature-pad.min.js'>
-</script>
-
-<script type="text/javascript">
-  Zepto('script').on('signature_pad:data_url', function(e, data_url){
-    console.log(data_url);
-  });
-</script>
+    </script>
