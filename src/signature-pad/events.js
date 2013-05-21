@@ -20,7 +20,7 @@
 
   SignaturePad.prototype.saveSignature = function(e) {
     var data_url = self.canvas.toDataURL("png");
-    Zepto(document.body).trigger("signature_pad:data_url", data_url);
+    Zepto(self.script).trigger("signature_pad:data_url", data_url);
 
     self.hide(e);
     self.pad_img.src = data_url;
@@ -33,7 +33,7 @@
     self.Post(self.endpoint+'/api/v0/signatures.json', payload, function(resp){
       if (!!resp.success) {
         self.hidden_field.value = resp.signature.url;
-        Zepto(document.body).trigger("signature_pad:save", resp.signature);
+        Zepto(self.script).trigger("signature_pad:save", resp.signature);
       } else {
         console.error(resp.error.message);
       }

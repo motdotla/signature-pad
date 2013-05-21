@@ -8,11 +8,11 @@
 
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js"></script>
   <script type="text/javascript">
-    Zepto(document).on('signature_pad:data_url', function(e, data_url){
+    Zepto('script').on('signature_pad:data_url', function(e, data_url){
       console.log(data_url);
     });
 
-    Zepto(document).on('signature_pad:save', function(e, signature){
+    Zepto('script').on('signature_pad:save', function(e, signature){
       console.log(signature.url);
     });
   </script>
