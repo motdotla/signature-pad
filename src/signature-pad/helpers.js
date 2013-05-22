@@ -25,4 +25,18 @@
   SignaturePad.prototype.StandardScreen = function() {
     return document.body.clientWidth >= 580;
   };
+
+  SignaturePad.prototype.FireEvent = function(name, target, data) {
+    //Create a generic event
+    var bubbles     = true;
+    var cancelable  = true;
+    var event       = document.createEvent("Events");
+    //Initialize it to be the event we want
+    event.initEvent(name, bubbles, cancelable, null, null, null, null, null, null, null, null, null, null, null, null);
+    event.data = data;
+    //FIRE!
+    target.dispatchEvent(event);
+  };
+
+
 }(SignaturePad));

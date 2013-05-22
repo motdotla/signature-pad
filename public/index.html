@@ -7,9 +7,9 @@
   <script src='/build/signature-pad.js'></script>
 
   <script type="text/javascript">
-    Zepto('script').on('signature_pad:data_url', function(e, data_url){
-      console.log(data_url);
-    });
+    signature_pad.script.addEventListener('signature_pad:data_url', function(e) {
+      console.log(e.data);
+    }, false);
   </script>
 
   <br/>
@@ -18,6 +18,12 @@
   <br/>
 
   <script src='/build/signature-pad.js'></script>
+
+  <script type="text/javascript">
+    signature_pad.script.addEventListener('signature_pad:data_url', function(e) {
+      console.log(e.data);
+    }, false);
+  </script>
 
 </body>
 </html>
