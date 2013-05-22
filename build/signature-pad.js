@@ -394,13 +394,14 @@
   SignaturePad.prototype.events = function() {
     self = this;
 
-    Zepto(this.pad).on(CLICK, this.show);
-    Zepto(this.add_signature).on(CLICK, this.saveSignature);
-    Zepto(this.close_signature).on(CLICK, this.hide);
-    Zepto(this.clear_signature).on(CLICK, this.clear);
-    Zepto(this.wrapper).on(CLICK, function(e) { e.stopPropagation(); });
-    Zepto(this.rotator_close).on(CLICK, this.hideRotatorAndPad);
-    Zepto(window).resize(this.showOrHideRotator);
+    this.pad.addEventListener(CLICK, this.show, false);
+    this.add_signature.addEventListener(CLICK, this.saveSignature, false);
+    this.close_signature.addEventListener(CLICK, this.hide, false);
+    this.clear_signature.addEventListener(CLICK, this.clear, false);
+    this.wrapper.addEventListener(CLICK, function(e) { e.stopPropagation(); }, false);
+    this.rotator_close.addEventListener(CLICK, this.hideRotatorAndPad, false);
+    this.rotator_close.addEventListener(CLICK, this.hideRotatorAndPad, false);
+    window.onresize = function(e) { self.showOrHideRotator(e); };
   };
 
   SignaturePad.prototype.saveSignature = function(e) {
