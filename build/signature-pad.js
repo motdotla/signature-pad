@@ -1,4 +1,4 @@
-/*! signature-pad.js - 0.0.1 - 2013-05-21 - scottmotte */
+/*! signature-pad.js - 0.0.1 - 2013-05-24 - scottmotte */
 /*! signature-mark.js - 0.0.1 - 2013-05-21 - scottmotte */
 (function(exports){
   var SignatureMark = function(canvas) {
@@ -507,7 +507,7 @@
     var cancelable  = true;
     var event       = document.createEvent("Events");
     //Initialize it to be the event we want
-    event.initEvent(name, bubbles, cancelable);
+    event.initEvent(name, bubbles, cancelable, null, null, null, null, null, null, null, null, null, null, null, null);
     event.data = data;
     //FIRE!
     target.dispatchEvent(event);
