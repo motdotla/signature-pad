@@ -507,7 +507,7 @@
     var cancelable  = true;
     var event       = document.createEvent("Events");
     //Initialize it to be the event we want
-    event.initEvent(name, bubbles, cancelable, null, null, null, null, null, null, null, null, null, null, null, null);
+    event.initEvent(name, bubbles, cancelable);
     event.data = data;
     //FIRE!
     target.dispatchEvent(event);
