@@ -5,4 +5,4 @@ if(SignaturePads){
 	var SignaturePads = {};
 }
 
-SignaturePads[_signature_pad_count] = SignaturePad();
+SignaturePads[_signature_pad_count] = signature_pad = SignaturePad();
