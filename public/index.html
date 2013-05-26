@@ -1,28 +1,97 @@
 <html>
 <head>
-  <title>Web Root</title>
-  
+  <title>Signnature Pad Demo</title>
+  <style>
+
+    *{
+      box-sizing: border-box;
+    }
+
+    body{
+      font-family: sans-serif;
+      padding : 100px;
+      background: #efefef;
+    }
+
+    .pads{
+      max-width: 50%;
+      float: left;
+    }
+
+    aside{
+      max-width: 50%;
+      float: right;
+      padding: 5px;
+      border: 1px solid #ddd;
+    }
+
+    aside:before{
+      content : "History";
+    }
+
+    aside img{
+      max-width: 100%;
+      margin: 10px 0;
+    }
+
+    img.first{
+      background: #fff;
+    }
+
+  </style>
 </head>
 <body>
-  <script src='/build/signature-pad.js'></script>
+  <div class=pads>
+    <script src='/build/signature-pad.js'></script>
 
-  <script type="text/javascript">
-    signature_pad.script.addEventListener('signature_pad:data_url', function(e) {
-      console.log(e.data);
-    }, false);
-  </script>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
 
-  <br/>
-  <br/>
-  <br/>
-  <br/>
+    <script src='/build/signature-pad.js'></script>
+  </div>
+  <script>
+    ~function(pads){
 
-  <script src='/build/signature-pad.js'></script>
+      var first = pads[0];
+      var second = pads[1];
+      var body = document.getElementsByTagName("body")[0];
+      var sideBar = document.createElement("aside");
+      var addToHistory = function(classes , ele){
 
-  <script type="text/javascript">
-    signature_pad.script.addEventListener('signature_pad:data_url', function(e) {
-      console.log(e.data);
-    }, false);
+          return function(res){
+            var img = document.createElement("img");
+
+            img.src = res;
+            img.className = classes;
+
+            sideBar.appendChild(img);
+            ele.clear();
+          }
+
+      };
+
+      body.appendChild(sideBar);
+
+
+      first.on("signed", addToHistory("first", first));
+      second.on("signed", addToHistory("second", second));
+      first.on("show", function(){
+        console.log("showing first signature pad");
+      });
+      first.on("hide", function(){
+        console.log("hideing first signature pad");
+      });
+      first.on("clear", function(){
+        console.log("clearing first signature pad");
+      })
+
+
+    }(SignaturePads);
+
+
+
   </script>
 
 </body>

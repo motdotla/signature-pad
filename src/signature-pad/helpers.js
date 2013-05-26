@@ -14,6 +14,7 @@
     if (document) {
       var scripts = document.getElementsByTagName('script');
       script      = scripts[scripts.length - 1];
+      this.emit("script", script);
     }
     return script;
   };
