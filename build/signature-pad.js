@@ -1,4 +1,6 @@
-/*! signature-pad.js - 0.0.1 - 2013-05-24 - scottmotte */
+/*! signature-pad.js - 0.0.1 - 2013-05-25 - scottmotte */
+(function(t){var e=function(t,n){return this instanceof e?(t.prototype=this,"function"==typeof n&&n(t),t):new e(t)};e.prototype=e.plus={},e.prototype.getState=function(){return this.__state},t.Marrow=e})(this),function(t){t.prototype.__events=function(){this._events={}},t.prototype.on=function(t,e){return"function"==typeof e&&"string"==typeof t&&(this._events||this.__events(),"object"!=typeof this._events[t]&&(this._events[t]=[]),"number"==typeof this._events[t].length&&this._events[t].push(e)),this},t.prototype.emit=function(t){if("object"==typeof this._events&&"string"==typeof t&&"object"==typeof this._events[t]&&this._events[t].length)for(var e=[].slice.call(arguments),n=0;this._events[t].length>n;n+=1)this._events[t][n].apply(this,e.slice(1))}}(Marrow),function(t){t.prototype.__extend=function(t,e,n){var o=this;this[t]=function(){"function"==typeof this[n]&&o[n].apply(this,arguments),"number"==typeof e&&(o.__state=e),o.emit(t)}},t.prototype.to=function(t,e,n){if("string"==typeof t&&"function"==typeof e){var o="__"+t;this[o]=e,this.__extend(t,n,o)}}}(Marrow);
+
 /*! signature-mark.js - 0.0.1 - 2013-05-21 - scottmotte */
 (function(exports){
   var SignatureMark = function(canvas) {
@@ -170,7 +172,7 @@
 
 }(SignatureMark));
 
-(function(exports){
+(function(exports, Base){
   var SignaturePad = function() {
     if(!(this instanceof SignaturePad)){
       return new SignaturePad();
@@ -182,6 +184,8 @@
 
     return this;
   };
+
+  SignaturePad = Base(SignaturePad);
 
   SignaturePad.prototype.init = function() {
     if (this.script) {
@@ -198,7 +202,7 @@
 
   exports.SignaturePad = SignaturePad;
 
-}(this));
+}(this, Marrow));
 
 (function(SignaturePad){
   var DEFAULT_SIGNATURE = "data:image/gif;base64,R0lGODlhRAIEAaIAAOLi1v7+5enp2ubm2Pf34e7u3QAAAAAAACH5BAAHAP8ALAAAAABEAgQBAAP/GLrc/jDKSau9OOvNu/9gKI5kaZ5oqq5s675wLM90bd94ru987//AoHBILBqPyKRyyWw6n9CodEqtWq/YrHbL7Xq/4LB4TC6bz+i0es1uu9/wuHxOr9vv+Lx+z+/7/4CBgoOEhYaHiImKi4yNjo+QkZKTlJWWl5iZmpucnZ6foKGio6SlpqeoqaqrrK2ur7CxsrO0tba3uLm6u7y9vr/AwcLDxMXGx8jJysvMzc7P0NHS09TV1tfY2drb3N3e3+Dh4uPk5ebn6Onq6+zt7u/w8fLz9PX29/j5+vv8/f7/AAMKHEiwoMGDCBMqXMiwocOHECNKnEixosWLGDNq3Mix/6PHjyBDihxJsqTJkyhTqlzJsqXLlzBjypxJs6bNmzhz6tzJs6fPn0CDCh1KtKjRo0iTKl3KtKnTp1CjSp1KtarVq1izat3KtavXr2DDih1LtqzZs2jTql3Ltq3bt3Djyp1Lt67du3jz6t3Lt6/fv4ADCx5MuLDhw4gTK17MuLHjx5AjS55MubLly5gza97MubPnz6BDix5NurTp06hTq17NurXr17Bjy55Nu7bt27hz697Nu7fv38CDCx9OvLjx48iTK1/OvLnz59CjS59Ovbr169g5CADAnUCE7QAEZE9DgDuAARAKmB+vZoB57w3Ud2dP3rx4BuXn009jHgD8AP/5AVDAfmrIF94C5g1IoBr9eQfefQumYWABBkbIRn/vWbgGeBlqqEaAAnq4BogKingGiNyZiAaG+qk4xoMBoueiGPLJ2OCMYBgIn4EQ4rhFgP8FcKOPWgRYogITEqlFgg/0pyQWD6bHZAMsYuhAlVZSieV6Wm4JwJVeftnllmB6WSaZY2J5ppppVrmmm22y+KaccWbJQJhi3hnmnHYiuGedTgLKpZ5mCpqioXn6WSihaDLKpqNwQkrnC1FGEKiklyraqKaPchqpp5OC2qcCePKZKal/YnqqkKmKumqpiJo6qKuzoroorYeqWiurt9q6qa+dAvupsKESOyqvvyIbrLKKwzJbLAsERDtBtNIaKmuuuCZq7KutbrsrrLpi6624zh4LbrbXalsut72u+2237pJ77rjqzhtvvfDaq2++/LZr75MAByzwwAQXbPDBCCes8MIMN+zwwxBHLPHEFFds8cUYZ6zxxhx37PHHIIcs8sgkl2zyySinrPLKLLfs8sswxyzzzDTXbPPNbiUAADs=";
@@ -407,6 +411,7 @@
     self.FireEvent("signature_pad:data_url", self.script, data_url);
     self.hide(e);
     self.pad_img.src = data_url;
+    self.emit("signed", data_url, self.script); // emit image to signed event
   };
 
   SignaturePad.prototype.show = function(e){
@@ -415,12 +420,14 @@
     self.overlay.className += " signature-show";
 
     self.showOrHideRotator();
+    self.emit("show"); // emit hide event
   };
 
   SignaturePad.prototype.hide = function(e){
     if (e) { e.preventDefault(); }
 
     self.overlay.className = "signature-overlay";
+    self.emit("hide"); // emit hide event
   };
 
   SignaturePad.prototype.clear = function(e) {
@@ -428,6 +435,7 @@
 
     var context = self.canvas.getContext("2d");
     context.clearRect(0, 0, self.canvas.width, self.canvas.height);
+    self.emit("clear"); // emit clear event
   };
 
   SignaturePad.prototype.showOrHideRotator = function(e) {
@@ -489,6 +497,7 @@
     if (document) {
       var scripts = document.getElementsByTagName('script');
       script      = scripts[scripts.length - 1];
+      this.emit("script", script);
     }
     return script;
   };
@@ -516,4 +525,11 @@
 
 }(SignaturePad));
 
-var signature_pad = SignaturePad();
+if(SignaturePads){
+	_signature_pad_count += 1;
+}else{
+	var _signature_pad_count = 0;
+	var SignaturePads = {};
+}
+
+SignaturePads[_signature_pad_count] = SignaturePad();

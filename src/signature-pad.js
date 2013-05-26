@@ -1,4 +1,4 @@
-(function(exports){
+(function(exports, Base){
   var SignaturePad = function() {
     if(!(this instanceof SignaturePad)){
       return new SignaturePad();
@@ -10,6 +10,8 @@
 
     return this;
   };
+
+  SignaturePad = Base(SignaturePad);
 
   SignaturePad.prototype.init = function() {
     if (this.script) {
@@ -26,4 +28,4 @@
 
   exports.SignaturePad = SignaturePad;
 
-}(this));
+}(this, Marrow));

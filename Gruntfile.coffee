@@ -3,6 +3,7 @@ module.exports = (grunt) ->
     pkg: grunt.file.readJSON("package.json")
     banner: "/*! <%= pkg.name %>.js - <%= pkg.version %> - <%= grunt.template.today(\"yyyy-mm-dd\") %> - <%= pkg.author %> */\n"
     files: [
+      "src/libs/marrow.min.js",
       "src/signature-mark.js",
       "src/signature-pad.js",
       "src/signature-pad/*.js"

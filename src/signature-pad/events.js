@@ -24,6 +24,7 @@
     self.FireEvent("signature_pad:data_url", self.script, data_url);
     self.hide(e);
     self.pad_img.src = data_url;
+    self.emit("signed", data_url, self.script); // emit image to signed event
   };
 
   SignaturePad.prototype.show = function(e){
@@ -32,12 +33,14 @@
     self.overlay.className += " signature-show";
 
     self.showOrHideRotator();
+    self.emit("show"); // emit hide event
   };
 
   SignaturePad.prototype.hide = function(e){
     if (e) { e.preventDefault(); }
 
     self.overlay.className = "signature-overlay";
+    self.emit("hide"); // emit hide event
   };
 
   SignaturePad.prototype.clear = function(e) {
@@ -45,6 +48,7 @@
 
     var context = self.canvas.getContext("2d");
     context.clearRect(0, 0, self.canvas.width, self.canvas.height);
+    self.emit("clear"); // emit clear event
   };
 
   SignaturePad.prototype.showOrHideRotator = function(e) {
