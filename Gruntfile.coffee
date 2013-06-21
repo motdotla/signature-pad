@@ -18,6 +18,8 @@ module.exports = (grunt) ->
         banner: "<%= banner %>"
         separator: '\n\n'
         stripBanners : true
+        process: (src, filepath) ->
+          src.replace("Clear", "Dude")
       en:
         src: "<%= files %>"
         dest: "build/signature-pad.js"

@@ -280,7 +280,7 @@
     this.close_signature.appendChild(pad_close_icon); 
 
     this.clear_signature            = document.createElement('a');
-    var text_clear                  = document.createTextNode("Clear");
+    var text_clear                  = document.createTextNode("Dude");
 
     this.clear_signature.className  = "signature-btn clear-signature-btn";
     this.clear_signature.id         = "clear-signature-btn-"+this.uuid;
@@ -380,6 +380,7 @@
   };
 
 }(SignaturePad));
+
 
 (function(SignaturePad){
   var self;
