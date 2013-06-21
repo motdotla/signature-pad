@@ -1,4 +1,17 @@
 module.exports = (grunt) ->
+  i8nSetValues = (original_src, language_code) ->
+    en_i8n  = grunt.file.readJSON("locales/en.json")
+    i8n     = grunt.file.readJSON("locales/#{language_code}.json")
+    i8n     = grunt.util._.extend(en_i8n, i8n)
+    
+    src = original_src
+    src = src.replace "i8n.clear", i8n.clear
+    src = src.replace "i8n.done", i8n.done
+    src = src.replace "i8n.rotate_90", i8n.rotate_90
+    src = src.replace "i8n.click_to_sign", i8n.click_to_sign
+    src
+
+
   grunt.initConfig
     pkg: grunt.file.readJSON("package.json")
     banner: "/*! <%= pkg.name %>.js - <%= pkg.version %> - <%= grunt.template.today(\"yyyy-mm-dd\") %> - <%= pkg.author %> */\n"
@@ -10,9 +23,12 @@ module.exports = (grunt) ->
     uglify:
       options:
         banner: "<%= banner %>"
-      build:
-        src: "<%= files %>"
+      en:
+        src: ["build/signature-pad.js"]
         dest: "build/signature-pad.min.js"
+      fr:
+        src: ["build/signature-pad.fr.js"]
+        dest: "build/signature-pad.fr.min.js"
     concat:
       options:
         banner: "<%= banner %>"
@@ -21,26 +37,14 @@ module.exports = (grunt) ->
       en:
         options:
           process: (src, filepath) ->
-            new_src = src
-            i8n = grunt.file.readJSON("locales/en.json")
-            console.log i8n
-            for key, value in i8n
-              do (key, value) ->
-                console.log key
-                console.log value
-                new_src = new_src.replace("i8n.#{key}", value)
-            
-            new_src
+            i8nSetValues(src, "en")
+
         src: "<%= files %>"
         dest: "build/signature-pad.js"
       fr:
         options:
           process: (src, filepath) ->
-            new_src = src
-            i8n = grunt.file.readJSON("locales/fr.json")
-            for key, value in i8n
-              new_src = new_src.replace("i8n.#{key}", value)
-            new_src
+            i8nSetValues(src, "fr")
 
         src: "<%= files %>"
         dest: "build/signature-pad.fr.js"
@@ -64,7 +68,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks "grunt-contrib-jshint"
 
   grunt.registerTask "test", ["simplemocha", "jshint"]
-  grunt.registerTask "default", ["jshint", "uglify", "concat", "connect"]
+  grunt.registerTask "default", ["jshint", "concat", "uglify", "connect"]
 
   # Some available commands
   # grunt

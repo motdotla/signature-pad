@@ -38,7 +38,7 @@
     this.pad.appendChild(this.pad_img);
     
     var pad_msg                       = document.createElement('div');
-    var text_click_sign               = document.createTextNode("Click to Sign");
+    var text_click_sign               = document.createTextNode("i8n.click_to_sign");
     var pad_msg_icon                  = document.createElement('span');
     pad_msg_icon.setAttribute("data-icon", "A");
 
@@ -114,7 +114,7 @@
 
     var rotator_msg                 = document.createElement('div');
     rotator_msg.className           = "signature-rotator-msg";
-    var text_rotate                 = document.createTextNode("Rotate 90\u00B0");
+    var text_rotate                 = document.createTextNode("i8n.rotate_90\u00B0");
     rotator_msg.appendChild(text_rotate);
 
     var rotator_icon                = document.createElement('div');

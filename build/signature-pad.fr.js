@@ -280,14 +280,14 @@
     this.close_signature.appendChild(pad_close_icon); 
 
     this.clear_signature            = document.createElement('a');
-    var text_clear                  = document.createTextNode("i8n.clear");
+    var text_clear                  = document.createTextNode("Effacer");
 
     this.clear_signature.className  = "signature-btn clear-signature-btn";
     this.clear_signature.id         = "clear-signature-btn-"+this.uuid;
     this.clear_signature.appendChild(text_clear);
 
     this.add_signature              = document.createElement('a');
-    var text_done                   = document.createTextNode("i8n.done");
+    var text_done                   = document.createTextNode("Terminé");
     var pad_done_icon               = document.createElement('span');
     pad_done_icon.setAttribute("data-icon", "A");
 
@@ -316,7 +316,7 @@
 
     var rotator_msg                 = document.createElement('div');
     rotator_msg.className           = "signature-rotator-msg";
-    var text_rotate                 = document.createTextNode("Rotate 90\u00B0");
+    var text_rotate                 = document.createTextNode("Tourner\u00B0");
     rotator_msg.appendChild(text_rotate);
 
     var rotator_icon                = document.createElement('div');
