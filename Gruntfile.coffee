@@ -18,9 +18,12 @@ module.exports = (grunt) ->
         banner: "<%= banner %>"
         separator: '\n\n'
         stripBanners : true
-      dist:
+      en:
         src: "<%= files %>"
         dest: "build/signature-pad.js"
+      fr:
+        src: "<%= files %>"
+        dest: "build/signature-pad.fr.js"
     jshint:
       all: ['src/signature-pad.js', 'src/signature-pad/*.js', 'src/signature-mark.js']
     connect:
