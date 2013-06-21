@@ -18,12 +18,30 @@ module.exports = (grunt) ->
         banner: "<%= banner %>"
         separator: '\n\n'
         stripBanners : true
-        process: (src, filepath) ->
-          src.replace("Clear", "Dude")
       en:
+        options:
+          process: (src, filepath) ->
+            new_src = src
+            i8n = grunt.file.readJSON("locales/en.json")
+            console.log i8n
+            for key, value in i8n
+              do (key, value) ->
+                console.log key
+                console.log value
+                new_src = new_src.replace("i8n.#{key}", value)
+            
+            new_src
         src: "<%= files %>"
         dest: "build/signature-pad.js"
       fr:
+        options:
+          process: (src, filepath) ->
+            new_src = src
+            i8n = grunt.file.readJSON("locales/fr.json")
+            for key, value in i8n
+              new_src = new_src.replace("i8n.#{key}", value)
+            new_src
+
         src: "<%= files %>"
         dest: "build/signature-pad.fr.js"
     jshint:
@@ -36,7 +54,7 @@ module.exports = (grunt) ->
           base: './public'
           keepalive: true
     simplemocha:
-      all: 
+      all:
         src: 'test/*.js'
 
   grunt.loadNpmTasks "grunt-contrib-concat"
