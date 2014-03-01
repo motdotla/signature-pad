@@ -11,6 +11,9 @@ Add a signing pad to your website or app.
 </script>
 ```
 
+![](https://raw.github.com/signatureio/signature-pad/master/screenshot1.png)
+![](https://raw.github.com/signatureio/signature-pad/master/screenshot2.png)
+
 ## Usage
 
 Place a script tag containing the path to signature-pad.js wherever you want the signature pad to be displayed.
