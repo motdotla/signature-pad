@@ -1,4 +1,4 @@
-/*! signature-pad.js - 0.0.1 - 2014-10-12 - motdotla */
+/*! signature-pad.js - 0.0.1 - 2014-10-13 - motdotla */
 var MicroEvent  = function(){};
 MicroEvent.prototype  = {
   bind  : function(event, fct){
