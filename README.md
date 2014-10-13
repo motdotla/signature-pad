@@ -1,6 +1,6 @@
 # signature-pad.js
 
-Add a signing pad to your website or app.
+Add a signing pad to your website or app. Try the [demo](http://codepen.io/motdotla/full/bKIuB/).
 
 ```html
 <script src='/path/to/signature-pad.min.js'></script>
