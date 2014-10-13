@@ -1,4 +1,4 @@
-# signature-pad.js
+# signature-pad
 
 Add a signing pad to your website or app. Try the [demo](http://codepen.io/motdotla/full/bKIuB/).
 
