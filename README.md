@@ -5,11 +5,6 @@ Add a signing pad to your website or app.
 ```html
 <script src='/path/to/signature-pad.min.js'></script>
 <script type="text/javascript"> 
-  signature_pad.script.addEventListener('signature_pad:data_url', function(e) {
-    console.log(e.data);
-  }, false);
-
-  // new
   signature_pad.bind('signature_pad.data_url', function(result) {
     console.log('signature_pad.data_url', result);
   });
@@ -27,13 +22,13 @@ Place a script tag containing the path to signature-pad.js wherever you want the
 <script src='/path/to/signature-pad.min.js'></script>
 ```
 
-Optionally, bind to the signature_pad:data_url event to get a [png data_url](http://css-tricks.com/data-uris/) of the signature.
+Optionally, bind to the signature_pad.data_url event to get a [png data_url](http://css-tricks.com/data-uris/) of the signature.
 
 ```html
 <script type="text/javascript"> 
-  signature_pad.script.addEventListener('signature_pad:data_url', function(e) {
-    console.log(e.data);
-  }, false);
+  signature_pad.bind('signature_pad.data_url', function(result) {
+    console.log('signature_pad.data_url', result);
+  });
 </script>
 ```
 
