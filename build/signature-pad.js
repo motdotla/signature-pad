@@ -1,5 +1,50 @@
-/*! signature-pad.js - 0.0.1 - 2014-02-28 - scottmotte */
-/*! signature-mark.js - 0.0.1 - 2013-05-21 - scottmotte */
+/*! signature-pad.js - 0.0.1 - 2014-10-12 - motdotla */
+var MicroEvent  = function(){};
+MicroEvent.prototype  = {
+  bind  : function(event, fct){
+    this._events = this._events || {};
+    this._events[event] = this._events[event] || [];
+    this._events[event].push(fct);
+  },
+  unbind  : function(event, fct){
+    this._events = this._events || {};
+    if( event in this._events === false  )  return;
+    this._events[event].splice(this._events[event].indexOf(fct), 1);
+  },
+  trigger : function(event /* , args... */){
+    this._events = this._events || {};
+    if( event in this._events === false  )  return;
+    for(var i = 0; i < this._events[event].length; i++){
+      this._events[event][i].apply(this, Array.prototype.slice.call(arguments, 1));
+    }
+  }
+};
+
+/**
+ * mixin will delegate all MicroEvent.js function in the destination object
+ *
+ * - require('MicroEvent').mixin(Foobar) will make Foobar able to use MicroEvent
+ *
+ * @param {Object} the object which will support MicroEvent
+*/
+MicroEvent.mixin  = function(destObject){
+  var props = ['bind', 'unbind', 'trigger'];
+  for(var i = 0; i < props.length; i ++){
+    if( typeof destObject === 'function' ){
+      destObject.prototype[props[i]]  = MicroEvent.prototype[props[i]];
+    }else{
+      destObject[props[i]] = MicroEvent.prototype[props[i]];
+    }
+  }
+};
+
+// export in common js
+if( typeof module !== "undefined" && ('exports' in module)){
+  module.exports  = MicroEvent;
+}
+
+
+/*! signature-mark.js - 0.0.1 - 2014-10-12 - motdotla */
 (function(exports){
   var SignatureMark = function(canvas) {
     if(!(this instanceof SignatureMark)){
@@ -170,6 +215,7 @@
 
 }(SignatureMark));
 
+
 (function(exports){
   var SignaturePad = function() {
     if(!(this instanceof SignaturePad)){
@@ -196,9 +242,11 @@
     }
   };
 
+  MicroEvent.mixin(SignaturePad);
   exports.SignaturePad = SignaturePad;
 
 }(this));
+
 
 (function(SignaturePad){
   var DEFAULT_SIGNATURE = "data:image/gif;base64,R0lGODlhRAIEAaIAAOLi1v7+5enp2ubm2Pf34e7u3QAAAAAAACH5BAAHAP8ALAAAAABEAgQBAAP/GLrc/jDKSau9OOvNu/9gKI5kaZ5oqq5s675wLM90bd94ru987//AoHBILBqPyKRyyWw6n9CodEqtWq/YrHbL7Xq/4LB4TC6bz+i0es1uu9/wuHxOr9vv+Lx+z+/7/4CBgoOEhYaHiImKi4yNjo+QkZKTlJWWl5iZmpucnZ6foKGio6SlpqeoqaqrrK2ur7CxsrO0tba3uLm6u7y9vr/AwcLDxMXGx8jJysvMzc7P0NHS09TV1tfY2drb3N3e3+Dh4uPk5ebn6Onq6+zt7u/w8fLz9PX29/j5+vv8/f7/AAMKHEiwoMGDCBMqXMiwocOHECNKnEixosWLGDNq3Mix/6PHjyBDihxJsqTJkyhTqlzJsqXLlzBjypxJs6bNmzhz6tzJs6fPn0CDCh1KtKjRo0iTKl3KtKnTp1CjSp1KtarVq1izat3KtavXr2DDih1LtqzZs2jTql3Ltq3bt3Djyp1Lt67du3jz6t3Lt6/fv4ADCx5MuLDhw4gTK17MuLHjx5AjS55MubLly5gza97MubPnz6BDix5NurTp06hTq17NurXr17Bjy55Nu7bt27hz697Nu7fv38CDCx9OvLjx48iTK1/OvLnz59CjS59Ovbr169g5CADAnUCE7QAEZE9DgDuAARAKmB+vZoB57w3Ud2dP3rx4BuXn009jHgD8AP/5AVDAfmrIF94C5g1IoBr9eQfefQumYWABBkbIRn/vWbgGeBlqqEaAAnq4BogKingGiNyZiAaG+qk4xoMBoueiGPLJ2OCMYBgIn4EQ4rhFgP8FcKOPWgRYogITEqlFgg/0pyQWD6bHZAMsYuhAlVZSieV6Wm4JwJVeftnllmB6WSaZY2J5ppppVrmmm22y+KaccWbJQJhi3hnmnHYiuGedTgLKpZ5mCpqioXn6WSihaDLKpqNwQkrnC1FGEKiklyraqKaPchqpp5OC2qcCePKZKal/YnqqkKmKumqpiJo6qKuzoroorYeqWiurt9q6qa+dAvupsKESOyqvvyIbrLKKwzJbLAsERDtBtNIaKmuuuCZq7KutbrsrrLpi6624zh4LbrbXalsut72u+2237pJ77rjqzhtvvfDaq2++/LZr75MAByzwwAQXbPDBCCes8MIMN+zwwxBHLPHEFFds8cUYZ6zxxhx37PHHIIcs8sgkl2zyySinrPLKLLfs8sswxyzzzDTXbPPNbiUAADs=";
@@ -405,7 +453,8 @@
 
   SignaturePad.prototype.saveSignature = function(e) {
     var data_url = self.canvas.toDataURL("png");
-    self.FireEvent("signature_pad:data_url", self.script, data_url);
+    self.trigger("signature_pad.data_url", data_url);
+    //self.FireEvent("signature_pad:data_url", self.script, data_url);
     self.hide(e);
     self.pad_img.src = data_url;
   };
@@ -473,6 +522,7 @@
     self.hideRotator();
   };
 }(SignaturePad));
+
 
 (function(SignaturePad){  
   SignaturePad.prototype.Uuid = function() {

@@ -24,6 +24,7 @@
     }
   };
 
+  MicroEvent.mixin(SignaturePad);
   exports.SignaturePad = SignaturePad;
 
 }(this));

@@ -21,7 +21,8 @@
 
   SignaturePad.prototype.saveSignature = function(e) {
     var data_url = self.canvas.toDataURL("png");
-    self.FireEvent("signature_pad:data_url", self.script, data_url);
+    self.trigger("signature_pad.data_url", data_url);
+    //self.FireEvent("signature_pad:data_url", self.script, data_url);
     self.hide(e);
     self.pad_img.src = data_url;
   };

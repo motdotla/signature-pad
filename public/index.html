@@ -7,9 +7,9 @@
   <script src='/build/signature-pad.js'></script>
 
   <script type="text/javascript">
-    signature_pad.script.addEventListener('signature_pad:data_url', function(e) {
-      console.log(e.data);
-    }, false);
+    signature_pad.bind('signature_pad.data_url', function(result) {
+      console.log(result);
+    });
   </script>
 
   <br/>
@@ -20,9 +20,9 @@
   <script src='/build/signature-pad.fr.js'></script>
 
   <script type="text/javascript">
-    signature_pad.script.addEventListener('signature_pad:data_url', function(e) {
-      console.log(e.data);
-    }, false);
+    signature_pad.bind('signature_pad.data_url', function(result) {
+      console.log(result);
+    });
   </script>
 
 </body>

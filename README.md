@@ -8,6 +8,11 @@ Add a signing pad to your website or app.
   signature_pad.script.addEventListener('signature_pad:data_url', function(e) {
     console.log(e.data);
   }, false);
+
+  // new
+  signature_pad.bind('signature_pad.data_url', function(result) {
+    console.log('signature_pad.data_url', result);
+  });
 </script>
 ```
 
@@ -34,8 +39,11 @@ Optionally, bind to the signature_pad:data_url event to get a [png data_url](htt
 
 ## Dev Setup
 
+Edit only files under `/src` directory. Then run the following to generate the `/build` directory.
+
 ```
-$ npm install -g grunt-cli
-$ npm install
-$ grunt
+npm install
+grunt
 ```
+
+Visit <http://localhost:3000> to test out your changes.

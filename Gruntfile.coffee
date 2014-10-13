@@ -16,7 +16,7 @@ module.exports = (grunt) ->
     pkg: grunt.file.readJSON("package.json")
     banner: "/*! <%= pkg.name %>.js - <%= pkg.version %> - <%= grunt.template.today(\"yyyy-mm-dd\") %> - <%= pkg.author %> */\n"
     files: [
-      "src/signature-mark.js",
+      "src/libs/*.js",
       "src/signature-pad.js",
       "src/signature-pad/*.js"
     ]
@@ -49,7 +49,7 @@ module.exports = (grunt) ->
         src: "<%= files %>"
         dest: "build/signature-pad.fr.js"
     jshint:
-      all: ['src/signature-pad.js', 'src/signature-pad/*.js', 'src/signature-mark.js']
+      all: ['src/libs/*.js', 'src/signature-pad.js', 'src/signature-pad/*.js']
     connect:
       server:
         options:
@@ -68,7 +68,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks "grunt-contrib-jshint"
 
   grunt.registerTask "test", ["simplemocha", "jshint"]
-  grunt.registerTask "default", ["jshint", "concat", "uglify", "connect"]
+  grunt.registerTask "default", ["jshint", "uglify", "concat", "connect"]
 
   # Some available commands
   # grunt
